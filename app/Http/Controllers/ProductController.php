@@ -22,12 +22,18 @@ class ProductController extends Controller
         return redirect(route('products.index'))->with('success', __('products.message_create_success'));
     }
 
+    public function show ($id){
+        $product = Product::find($id);
+        return view('products.view', ['product' => $product]);
+    }
+
     public function edit(Product $product){
         return view('products.edit', ['product' => $product]);
     }
 
     public function update(Product $product, Request $request){
         $data = $this->validateProduct($request);
+        $product -> update($data);
         return redirect(route('products.index'))->with('success', __('products.message_update_success'));
     }
 
